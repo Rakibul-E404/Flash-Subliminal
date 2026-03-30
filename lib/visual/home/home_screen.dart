@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:subliminal/core/app_text_style.dart';
 import 'dart:io';
 import '../../widget/custom_background_two.dart';
 import 'board_details_screen.dart';
@@ -412,7 +413,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Scaffold(body: Stack(
       children: [
         const CustomBackgroundTwo(),
         SafeArea(
@@ -557,15 +558,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(40),
                                 ),
                               ),
-                              child: const Row(
+                              child:  Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SizedBox(width: 8),
                                   Text(
                                     'Edit',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
+                                    style: AppTextStyle.defaultTextStyleBlack.copyWith(
+                                      fontWeight: FontWeight.bold
                                     ),
                                   ),
                                 ],
@@ -581,7 +581,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
-    );
+    ),);
   }
 
   // Normal board item (default view)
@@ -632,6 +632,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
+
+
+
   // Rename board item (with editable text fields)
   Widget _buildRenameBoardItem(int index) {
     final board = boards[index];
@@ -667,17 +671,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Color(0xFF6B6B6B),
                   fontWeight: FontWeight.w500,
                 ),
-                decoration: const InputDecoration(
-                  isDense: true,
-                  contentPadding: EdgeInsets.symmetric(vertical: 4),
-                  border: InputBorder.none,
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFE0D5CF)),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF9DB4C0), width: 2),
-                  ),
-                ),
+                // decoration: const InputDecoration(
+                //   isDense: true,
+                //   contentPadding: EdgeInsets.symmetric(vertical: 4),
+                //   border: InputBorder.none,
+                //   enabledBorder: UnderlineInputBorder(
+                //     borderSide: BorderSide(color: Color(0xFFE0D5CF)),
+                //   ),
+                //   focusedBorder: UnderlineInputBorder(
+                //     borderSide: BorderSide(color: Color(0xFF9DB4C0), width: 2),
+                //   ),
+                // ),
               ),
             ),
             const Icon(

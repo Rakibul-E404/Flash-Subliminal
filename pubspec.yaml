@@ -67,6 +67,7 @@ flutter:
   assets:
      - assets/images/
      - assets/icons/
+     - assets/tunes/
      - assets/videos/
   #   - images/a_dot_ham.jpeg
 
@@ -84,7 +85,7 @@ flutter:
   fonts:
      - family: Montserrat-VariableFont_wght
        fonts:
-         - asset: fonts/Montserrat-VariableFont_wght.ttf
+         - asset: assets/fonts/Montserrat-VariableFont_wght.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

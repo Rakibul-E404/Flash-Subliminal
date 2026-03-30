@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:subliminal/core/app_text_style.dart';
 import '../../widget/custom_background_two.dart';
 
 class BoardDetailScreen extends StatefulWidget {
@@ -222,9 +223,9 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                                 vertical: 14,
                               ),
                             ),
-                            child: const Text(
+                            child:  Text(
                               'Edit',
-                              style: TextStyle(fontSize: 16),
+                              style: AppTextStyle.defaultTextStyleBlack,
                             ),
                           ),
                         ),

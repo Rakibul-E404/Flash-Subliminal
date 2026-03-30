@@ -166,26 +166,28 @@ class _SettingsDialogState extends State<SettingsDialog> {
                 });
               },
             ),
-            const SizedBox(height: 12),
-            if (_tempSettings.audioOptions == 'Frequency')
-              const Text(
-                '• Frequency: pure sound frequencies only',
-                style: TextStyle(fontSize: 12, color: Colors.grey),
-              ),
-            if (_tempSettings.audioOptions == 'Subliminal')
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    '• Frequency: pure sound frequencies only',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-                  const Text(
-                    '• Subliminal: affirmations embedded in audio',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-                ],
-              ),
+            // const SizedBox(height: 12),
+            // if (_tempSettings.audioOptions == 'Frequency')
+            //   const Text(
+            //     '• Frequency: pure sound frequencies only',
+            //     style: TextStyle(fontSize: 12, color: Colors.grey),
+            //   ),
+            // if (_tempSettings.audioOptions == 'Subliminal')
+            //   Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       const Text(
+            //         '• Frequency: pure sound frequencies only',
+            //         style: TextStyle(fontSize: 12, color: Colors.grey),
+            //       ),
+            //       const Text(
+            //         '• Subliminal: affirmations embedded in audio',
+            //         style: TextStyle(fontSize: 12, color: Colors.grey),
+            //       ),
+            //     ],
+            //   ),
+
+
             const SizedBox(height: 32),
 
             // Buttons
@@ -253,18 +255,18 @@ class _SettingsDialogState extends State<SettingsDialog> {
 
               ],
             ),
-            const SizedBox(height: 16),
-            const Center(
-              child: Text(
-                'Save, then tap the circle to start Soulminimal Flash',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                  fontStyle: FontStyle.italic,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            // const SizedBox(height: 16),
+            // const Center(
+            //   child: Text(
+            //     'Save, then tap the circle to start Soulminimal Flash',
+            //     style: TextStyle(
+            //       fontSize: 12,
+            //       color: Colors.grey,
+            //       fontStyle: FontStyle.italic,
+            //     ),
+            //     textAlign: TextAlign.center,
+            //   ),
+            // ),
           ],
         ),
       ),

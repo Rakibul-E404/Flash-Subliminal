@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,7 +21,6 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   int currentIndex = 0;
   final ImagePicker _picker = ImagePicker();
 
-  // Settings state
   SettingsModel settings = SettingsModel();
 
   final List<Widget> screens = const [
@@ -47,7 +47,6 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     }
 
     if (index == 2) {
-      // Show settings dialog directly when circle button is tapped
       _showSettingsDialog();
       return;
     }
@@ -81,15 +80,59 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Scaffold(
-          body: screens[currentIndex],
-          bottomNavigationBar: _buildBottomNav(showCenterButton),
+        // Screens fill the background
+        Positioned.fill(
+          child: screens[currentIndex],
         ),
 
-        /// FLOATING CENTER BUTTON (only on Home screen)
+        // Bottom navigation bar (glass effect)
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+              child: Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: showCenterButton
+                      ? MainAxisAlignment.spaceAround
+                      : MainAxisAlignment.spaceEvenly,
+                  children: showCenterButton
+                      ? [
+                    _navItem(Icons.home, 0),
+                    _navItem(Icons.photo, 1),
+                    const SizedBox(width: 70), // space for center button
+                    _navItem(Icons.self_improvement, 3),
+                    _navItem(Icons.settings, 4),
+                  ]
+                      : [
+                    _navItem(Icons.home, 0),
+                    _navItem(Icons.photo, 1),
+                    _navItem(Icons.self_improvement, 3),
+                    _navItem(Icons.settings, 4),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        // Floating center button above the bottom nav
         if (showCenterButton)
           Positioned(
-            bottom: 40,
+            bottom: 40, // adjust this so it hovers above the nav
             child: GestureDetector(
               onTap: () => onTap(2),
               child: Container(
@@ -98,10 +141,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: const RadialGradient(
-                    colors: [
-                      Colors.white,
-                      Color(0xFFD9C3B8),
-                    ],
+                    colors: [Colors.white, Color(0xFFD9C3B8)],
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -113,7 +153,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                       color: Colors.white.withOpacity(0.8),
                       blurRadius: 10,
                       spreadRadius: 2,
-                    )
+                    ),
                   ],
                 ),
                 child: Center(
@@ -127,38 +167,6 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
             ),
           ),
       ],
-    );
-  }
-
-  Widget _buildBottomNav(bool showCenterButton) {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: const Color(0xFFE8DCD6),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-          )
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: showCenterButton
-            ? [
-          _navItem(Icons.home, 0),
-          _navItem(Icons.photo, 1),
-          const SizedBox(width: 60), // space for center button
-          _navItem(Icons.self_improvement, 3),
-          _navItem(Icons.settings, 4),
-        ]
-            : [
-          _navItem(Icons.home, 0),
-          _navItem(Icons.photo, 1),
-          _navItem(Icons.self_improvement, 3),
-          _navItem(Icons.settings, 4),
-        ],
-      ),
     );
   }
 

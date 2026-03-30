@@ -1,266 +1,7 @@
-// import 'package:flutter/material.dart';
-// import 'package:video_player/video_player.dart';
-// import 'package:audioplayers/audioplayers.dart';
-//
-// class MeditationScreen extends StatefulWidget {
-//   const MeditationScreen({super.key});
-//
-//   @override
-//   State<MeditationScreen> createState() => _MeditationScreenState();
-// }
-//
-// class _MeditationScreenState extends State<MeditationScreen> {
-//   late VideoPlayerController _videoController;
-//   late AudioPlayer _audioPlayer;
-//   bool _isPlaying = false;
-//   bool _isMuted = false;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _initializeVideo();
-//     _initializeAudio();
-//   }
-//
-//   Future<void> _initializeVideo() async {
-//     // Initialize video from assets
-//     _videoController = VideoPlayerController.asset(
-//       'assets/videos/FULL MEDITATION VIDEO.mp4', // Your video asset path
-//     )..initialize().then((_) {
-//       setState(() {});
-//     });
-//     _videoController.setLooping(true);
-//     _videoController.setVolume(0.0); // Mute video audio if you have separate music
-//   }
-//
-//   Future<void> _initializeAudio() async {
-//     _audioPlayer = AudioPlayer();
-//     // Initialize audio from assets
-//     await _audioPlayer.setSource(
-//       AssetSource('assets/tunes/souliminal_track.mp3'), // Your audio asset path
-//     );
-//   }
-//
-//   Future<void> _togglePlayPause() async {
-//     if (_isPlaying) {
-//       await _videoController.pause();
-//       await _audioPlayer.pause();
-//     } else {
-//       await _videoController.play();
-//       await _audioPlayer.resume();
-//     }
-//     setState(() {
-//       _isPlaying = !_isPlaying;
-//     });
-//   }
-//
-//   Future<void> _toggleMute() async {
-//     if (_isMuted) {
-//       await _audioPlayer.resume();
-//     } else {
-//       await _audioPlayer.pause();
-//     }
-//     setState(() {
-//       _isMuted = !_isMuted;
-//     });
-//   }
-//
-//   @override
-//   void dispose() {
-//     _videoController.dispose();
-//     _audioPlayer.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.black,
-//       body: Stack(
-//         children: [
-//           // Video Background
-//           Positioned.fill(
-//             child: _videoController.value.isInitialized
-//                 ? FittedBox(
-//               fit: BoxFit.cover,
-//               child: SizedBox(
-//                 width: _videoController.value.size.width,
-//                 height: _videoController.value.size.height,
-//                 child: VideoPlayer(_videoController),
-//               ),
-//             )
-//                 : const Center(
-//               child: CircularProgressIndicator(
-//                 color: Colors.white,
-//               ),
-//             ),
-//           ),
-//
-//           // Gradient Overlay
-//           Positioned.fill(
-//             child: Container(
-//               decoration: BoxDecoration(
-//                 gradient: LinearGradient(
-//                   begin: Alignment.topCenter,
-//                   end: Alignment.bottomCenter,
-//                   colors: [
-//                     Colors.black.withValues(alpha: 0.3),
-//                     Colors.transparent,
-//                     Colors.black.withValues(alpha: 0.7),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//
-//           // Top Content
-//           Positioned(
-//             top: 60,
-//             left: 0,
-//             right: 0,
-//             child: Column(
-//               children: [
-//                 const Text(
-//                   'Meditation',
-//                   style: TextStyle(
-//                     fontSize: 32,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.white,
-//                     shadows: [
-//                       Shadow(
-//                         blurRadius: 10,
-//                         color: Colors.black,
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//                 const SizedBox(height: 8),
-//                 Text(
-//                   'Relax and breathe',
-//                   style: TextStyle(
-//                     fontSize: 16,
-//                     color: Colors.white.withValues(alpha: 0.8),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//
-//           // Center Play/Pause Button
-//           Center(
-//             child: GestureDetector(
-//               onTap: _togglePlayPause,
-//               child: Container(
-//                 width: 80,
-//                 height: 80,
-//                 decoration: BoxDecoration(
-//                   shape: BoxShape.circle,
-//                   color: Colors.white.withValues(alpha: 0.2),
-//                   border: Border.all(
-//                     color: Colors.white.withValues(alpha: 0.5),
-//                     width: 2,
-//                   ),
-//                 ),
-//                 child: Icon(
-//                   _isPlaying ? Icons.pause : Icons.play_arrow,
-//                   size: 50,
-//                   color: Colors.white,
-//                 ),
-//               ),
-//             ),
-//           ),
-//
-//           // Bottom Button and Controls
-//           Positioned(
-//             bottom: 0,
-//             left: 0,
-//             right: 0,
-//             child: Container(
-//               padding: const EdgeInsets.fromLTRB(24, 24, 24, 40),
-//               decoration: BoxDecoration(
-//                 gradient: LinearGradient(
-//                   begin: Alignment.topCenter,
-//                   end: Alignment.bottomCenter,
-//                   colors: [
-//                     Colors.transparent,
-//                     Colors.black.withValues(alpha: 0.8),
-//                   ],
-//                 ),
-//               ),
-//               child: Column(
-//                 mainAxisSize: MainAxisSize.min,
-//                 children: [
-//                   // Mute/Unmute Button
-//                   IconButton(
-//                     onPressed: _toggleMute,
-//                     icon: Icon(
-//                       _isMuted ? Icons.volume_off : Icons.volume_up,
-//                       color: Colors.white,
-//                       size: 28,
-//                     ),
-//                   ),
-//                   const SizedBox(height: 12),
-//
-//                   // Main Elevated Button
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       // Your action here
-//                       ScaffoldMessenger.of(context).showSnackBar(
-//                         const SnackBar(
-//                           content: Text('Meditation session started!'),
-//                           backgroundColor: Color(0xFF9DB4C0),
-//                         ),
-//                       );
-//                     },
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: const Color(0xFF9DB4C0),
-//                       foregroundColor: Colors.white,
-//                       padding: const EdgeInsets.symmetric(
-//                         horizontal: 60,
-//                         vertical: 18,
-//                       ),
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(30),
-//                       ),
-//                       elevation: 8,
-//                       shadowColor: Colors.black.withValues(alpha: 0.3),
-//                     ),
-//                     child: const Text(
-//                       'Start Session',
-//                       style: TextStyle(
-//                         fontSize: 18,
-//                         fontWeight: FontWeight.w600,
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(height: 12),
-//
-//                   // Progress indicator or time
-//                   if (_videoController.value.isInitialized)
-//                     Text(
-//                       '${_videoController.value.position.inMinutes}:${(_videoController.value.position.inSeconds % 60).toString().padLeft(2, '0')} / ${_videoController.value.duration.inMinutes}:${(_videoController.value.duration.inSeconds % 60).toString().padLeft(2, '0')}',
-//                       style: TextStyle(
-//                         color: Colors.white.withValues(alpha: 0.7),
-//                         fontSize: 12,
-//                       ),
-//                     ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-
-
-
 
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
-import 'package:audioplayers/audioplayers.dart';
+import '../../models/settings_model.dart';
+import '../settings/settings_dialogue.dart';
 
 class MeditationScreen extends StatefulWidget {
   const MeditationScreen({super.key});
@@ -270,219 +11,54 @@ class MeditationScreen extends StatefulWidget {
 }
 
 class _MeditationScreenState extends State<MeditationScreen> {
-  late VideoPlayerController _videoController;
-  late AudioPlayer _audioPlayer;
   bool _isPlaying = false;
-  bool _isMuted = false;
-  String? _errorMessage;
 
-  @override
-  void initState() {
-    super.initState();
-    _initializeMedia();
+  // Default settings
+  SettingsModel _currentSettings = SettingsModel(
+    position: 'Centre',
+    showEvery: '1 s',
+    imageSize: 'Full',
+    sessionLength: '30 m',
+    audioOptions: 'Off',
+  );
+
+  void _togglePlayPause() {
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
   }
 
-  Future<void> _initializeMedia() async {
-    try {
-      // Initialize Video
-      _videoController = VideoPlayerController.asset(
-        'assets/videos/meditation_video.mp4',
-      );
-
-      await _videoController.initialize();
-      _videoController.setLooping(true);
-      _videoController.setVolume(0.0);
-
-      // Initialize Audio
-      _audioPlayer = AudioPlayer();
-      await _audioPlayer.setSource(
-        AssetSource('assets/tunes/souliminal_track.mp3'),
-      );
-
-      if (mounted) {
-        setState(() {});
-      }
-
-      print('✅ Media initialized successfully');
-    } catch (e) {
-      print('❌ Error initializing media: $e');
-      if (mounted) {
-        setState(() {
-          _errorMessage = 'Error loading media: $e';
-        });
-      }
-    }
-  }
-
-  Future<void> _togglePlayPause() async {
-    try {
-      if (_isPlaying) {
-        await _videoController.pause();
-        await _audioPlayer.pause();
-      } else {
-        await _videoController.play();
-        await _audioPlayer.resume();
-      }
-      setState(() {
-        _isPlaying = !_isPlaying;
-      });
-    } catch (e) {
-      print('Error playing/pausing: $e');
-    }
-  }
-
-  Future<void> _toggleMute() async {
-    try {
-      if (_isMuted) {
-        await _audioPlayer.resume();
-      } else {
-        await _audioPlayer.pause();
-      }
-      setState(() {
-        _isMuted = !_isMuted;
-      });
-    } catch (e) {
-      print('Error muting: $e');
-    }
-  }
-
-  @override
-  void dispose() {
-    _videoController.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
+  void _showSettingsDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => SettingsDialog(
+        settings: _currentSettings,
+        onSave: (newSettings) {
+          setState(() {
+            _currentSettings = newSettings;
+          });
+          // You can also navigate to the meditation session screen here
+          // or start the meditation session with the new settings
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // Show error if initialization failed
-    if (_errorMessage != null) {
-      return Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.error, color: Colors.red, size: 64),
-              const SizedBox(height: 16),
-              Text(
-                _errorMessage!,
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _errorMessage = null;
-                  });
-                  _initializeMedia();
-                },
-                child: const Text('Retry'),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // Video Background
+          // 🖼 BACKGROUND IMAGE
           Positioned.fill(
-            child: _videoController.value.isInitialized
-                ? FittedBox(
+            child: Image.asset(
+              'assets/images/meditation.png',
               fit: BoxFit.cover,
-              child: SizedBox(
-                width: _videoController.value.size.width,
-                height: _videoController.value.size.height,
-                child: VideoPlayer(_videoController),
-              ),
-            )
-                : const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
             ),
           ),
 
-          // Gradient Overlay
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withValues(alpha: 0.3),
-                    Colors.transparent,
-                    Colors.black.withValues(alpha: 0.7),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // Top Content
-          Positioned(
-            top: 60,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                const Text(
-                  'Meditation',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 10,
-                        color: Colors.black,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Relax and breathe',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white.withValues(alpha: 0.8),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Center Play/Pause Button
-          Center(
-            child: GestureDetector(
-              onTap: _togglePlayPause,
-              child: Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.2),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.5),
-                    width: 2,
-                  ),
-                ),
-                child: Icon(
-                  _isPlaying ? Icons.pause : Icons.play_arrow,
-                  size: 50,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-
-          // Bottom Button and Controls
+          // 🔽 BOTTOM SECTION
           Positioned(
             bottom: 0,
             left: 0,
@@ -495,66 +71,76 @@ class _MeditationScreenState extends State<MeditationScreen> {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withValues(alpha: 0.8),
+                    Colors.black.withOpacity(0.8),
                   ],
                 ),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Mute/Unmute Button
-                  IconButton(
-                    onPressed: _toggleMute,
-                    icon: Icon(
-                      _isMuted ? Icons.volume_off : Icons.volume_up,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-
-                  // Main Elevated Button
-                  ElevatedButton(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Meditation session started!'),
-                          backgroundColor: Color(0xFF9DB4C0),
+                  // 🔘 START SESSION BUTTON WITH GRADIENT BORDER
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      gradient: const LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          Color(0xFF6B8E9F), // Blue-gray
+                          Color(0xFF7FA894), // Green-gray
+                          Color(0xFFA8C5B8), // Light green
+                        ],
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.3),
+                          blurRadius: 10,
+                          spreadRadius: 1,
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF9DB4C0),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 60,
-                        vertical: 18,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      elevation: 8,
-                      shadowColor: Colors.black.withValues(alpha: 0.3),
+                      ],
                     ),
-                    child: const Text(
-                      'Start Session',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2), // Border width
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          gradient: const LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              Color(0xFF5A7A8A), // Slightly darker blue-gray
+                              Color(0xFF6B9A84), // Slightly darker green-gray
+                            ],
+                          ),
+                        ),
+                        child: ElevatedButton(
+                          onPressed: _showSettingsDialog, // Open settings dialog
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            foregroundColor: Colors.white,
+                            shadowColor: Colors.transparent,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 60,
+                              vertical: 18,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: const Text(
+                            'Start Session',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
-
-                  // Progress indicator or time
-                  if (_videoController.value.isInitialized)
-                    Text(
-                      '${_videoController.value.position.inMinutes}:${(_videoController.value.position.inSeconds % 60).toString().padLeft(2, '0')} / ${_videoController.value.duration.inMinutes}:${(_videoController.value.duration.inSeconds % 60).toString().padLeft(2, '0')}',
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.7),
-                        fontSize: 12,
-                      ),
-                    ),
+                  const SizedBox(height: 70),
                 ],
               ),
             ),

@@ -795,18 +795,18 @@ class _CenterButtonScreenState extends State<CenterButtonScreen> {
                         ],
                       ),
 
-                    const SizedBox(height: 16),
-                    const Center(
-                      child: Text(
-                        'Save, then tap the circle to start Soulminimal Flash',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                          fontStyle: FontStyle.italic,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    // const SizedBox(height: 16),
+                    // const Center(
+                    //   child: Text(
+                    //     'Save, then tap the circle to start Soulminimal Flash',
+                    //     style: TextStyle(
+                    //       fontSize: 12,
+                    //       color: Colors.grey,
+                    //       fontStyle: FontStyle.italic,
+                    //     ),
+                    //     textAlign: TextAlign.center,
+                    //   ),
+                    // ),
                     const SizedBox(height: 16),
                     // Close button
                     SizedBox(
