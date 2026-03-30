@@ -41,33 +41,6 @@ class _SettingsDialogState extends State<SettingsDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 16),
-
-            // Run On Start Up
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Run On Start Up',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
-                  ),
-                ),
-                Switch(
-                  value: _tempSettings.runOnStartUp,
-                  onChanged: (value) {
-                    setState(() {
-                      _tempSettings = _tempSettings.copyWith(runOnStartUp: value);
-                    });
-                  },
-                  activeColor: const Color(0xFFB8D4D3),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-
             // Position
             const Text(
               'Position',
@@ -238,32 +211,46 @@ class _SettingsDialogState extends State<SettingsDialog> {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      widget.onSave(_tempSettings);
-                      Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Settings saved!'),
-                          backgroundColor: Color(0xFFB8D4D3),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFB8D4D3),
-                      foregroundColor: Colors.white,
-                      elevation: 2,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xff7d91aa),
+                          Color(0xffb3bfaf),
+                        ],
                       ),
                     ),
-                    child: const Text(
-                      'Save',
-                      style: TextStyle(fontSize: 16),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        widget.onSave(_tempSettings);
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Settings saved!'),
+                            backgroundColor: Color(0xFFB8D4D3),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      child: const Text(
+                        'Save',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ),
                 ),
+
               ],
             ),
             const SizedBox(height: 16),
