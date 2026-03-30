@@ -76,58 +76,61 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final showCenterButton = currentIndex == 0;
+
     return Stack(
       alignment: Alignment.center,
       children: [
         Scaffold(
           body: screens[currentIndex],
-          bottomNavigationBar: _buildBottomNav(),
+          bottomNavigationBar: _buildBottomNav(showCenterButton),
         ),
 
-        /// FLOATING CENTER BUTTON
-        Positioned(
-          bottom: 40,
-          child: GestureDetector(
-            onTap: () => onTap(2),
-            child: Container(
-              width: 70,
-              height: 70,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: const RadialGradient(
-                  colors: [
-                    Colors.white,
-                    Color(0xFFD9C3B8),
+        /// FLOATING CENTER BUTTON (only on Home screen)
+        if (showCenterButton)
+          Positioned(
+            bottom: 40,
+            child: GestureDetector(
+              onTap: () => onTap(2),
+              child: Container(
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: const RadialGradient(
+                    colors: [
+                      Colors.white,
+                      Color(0xFFD9C3B8),
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 20,
+                      spreadRadius: 5,
+                    ),
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.8),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    )
                   ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 20,
-                    spreadRadius: 5,
+                child: Center(
+                  child: SvgPicture.asset(
+                    'assets/icons/circle_button.svg',
+                    width: 70,
+                    height: 70,
                   ),
-                  BoxShadow(
-                    color: Colors.white.withOpacity(0.8),
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                  )
-                ],
-              ),
-              child: Center(
-                child: SvgPicture.asset(
-                  'assets/icons/circle_button.svg',
-                  width: 70,
-                  height: 70,
                 ),
               ),
             ),
           ),
-        ),
       ],
     );
   }
 
-  Widget _buildBottomNav() {
+  Widget _buildBottomNav(bool showCenterButton) {
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -141,10 +144,17 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
+        children: showCenterButton
+            ? [
           _navItem(Icons.home, 0),
           _navItem(Icons.photo, 1),
-          const SizedBox(width: 60),
+          const SizedBox(width: 60), // space for center button
+          _navItem(Icons.self_improvement, 3),
+          _navItem(Icons.settings, 4),
+        ]
+            : [
+          _navItem(Icons.home, 0),
+          _navItem(Icons.photo, 1),
           _navItem(Icons.self_improvement, 3),
           _navItem(Icons.settings, 4),
         ],
@@ -159,6 +169,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
       onTap: () => onTap(index),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             icon,
