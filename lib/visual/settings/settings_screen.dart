@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:subliminal/core/app_text_style.dart';
 import 'dart:ui';
-import 'package:subliminal/widget/custom_background_two.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../../widget/custom_background.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:subliminal/core/app_text_style.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -20,7 +19,7 @@ class SettingsScreen extends StatelessWidget {
             // Centered title with home button - matches screenshot layout
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 50, bottom: 20),
+              padding: const EdgeInsets.only(top: 20 /* bottom: 20*/),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -29,50 +28,75 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               child: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Settings',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
+                    ),
+                    Text(
+                      'Settings',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      width: 40,
+                    )
+                  ],
                 ),
               ),
             ),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 5,
+                ),
                 children: const [
-                  SettingsItem(icon: Icons.person_outline, title: 'Account',),
-                  SettingsItem(icon: Icons.notifications_none_outlined, title: 'Reminders'),
-                  SettingsItem(icon: Icons.card_giftcard_outlined, title: 'Subscription'),
-                  SettingsItem(icon: Icons.favorite_border, title: 'Dedication'),
-                  SettingsItem(icon: Icons.info_outline, title: 'About Us'),
-                  SettingsItem(icon: Icons.contact_mail_outlined, title: 'Contact'),
-                  SettingsItem(icon: Icons.help_outline, title: 'FAQs'),
-                  SettingsItem(icon: Icons.lightbulb_outline, title: 'Tips'),
-                  SettingsItem(icon: Icons.description_outlined, title: 'Terms & Condition'),
-                  SettingsItem(icon: Icons.privacy_tip_outlined, title: 'Privacy Policy'),
+                  SettingsItem(icon: CupertinoIcons.person_alt_circle, title: 'Account'),
+                  SettingsItem(
+                    icon: Icons.notifications,
+                    title: 'Reminders',
+                  ),
+                  SettingsItem(
+                    icon: Icons.diamond,
+                    title: 'Subscription',
+                  ),
+                  SettingsItem(
+                    icon: Icons.favorite,
+                    title: 'Dedication',
+                  ),
+                  SettingsItem(icon: Icons.info, title: 'About Us'),
+                  SettingsItem(
+                    icon: Icons.headset_mic,
+                    title: 'Contact',
+                  ),
+                  SettingsItem(icon: CupertinoIcons.chat_bubble_2_fill, title: 'FAQs'),
+                  SettingsItem(icon: Icons.lightbulb, title: 'Tips'),
+                  SettingsItem(
+                    icon: Icons.description,
+                    title: 'Terms & Condition',
+                  ),
+                  SettingsItem(
+                    icon: CupertinoIcons.checkmark_shield_fill,
+                    title: 'Privacy Policy',
+                  ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(onPressed: (){
-                Get.back();
-              }, icon: Icon(Icons.home,color: Colors.white,size: 40,)),
-            ),
-            SizedBox(
-              height: 40,
-            )
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: IconButton(onPressed: (){
+            //     Get.back();
+            //   }, icon: Icon(Icons.home,color: Colors.white,size: 20,)),
+            // ),
+            SizedBox(height: 20),
           ],
         ),
       ),
@@ -84,11 +108,7 @@ class SettingsItem extends StatelessWidget {
   final IconData icon;
   final String title;
 
-  const SettingsItem({
-    super.key,
-    required this.icon,
-    required this.title,
-  });
+  const SettingsItem({super.key, required this.icon, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +125,10 @@ class SettingsItem extends StatelessWidget {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18), // Button-like padding
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 10,
+                ), // Button-like padding
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -116,7 +139,10 @@ class SettingsItem extends StatelessWidget {
                     end: Alignment.centerRight,
                   ),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white.withOpacity(0.3), width: 1.5),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.3),
+                    width: 1.5,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.15),
@@ -139,8 +165,8 @@ class SettingsItem extends StatelessWidget {
                         title,
                         style: AppTextStyle.defaultTextStyleBlack.copyWith(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18
-                        )
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                     Icon(Icons.arrow_right, color: Colors.black, size: 26),
@@ -155,8 +181,8 @@ class SettingsItem extends StatelessWidget {
   }
 
   void _handleTap(BuildContext context, String title) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Opening $title...')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('Opening $title...')));
   }
 }
