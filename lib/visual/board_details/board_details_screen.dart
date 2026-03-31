@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:subliminal/core/app_text_style.dart';
@@ -54,123 +55,9 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
     ];
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Stack(
-  //     children: [
-  //       const CustomBackgroundTwo(),
-  //       SafeArea(
-  //         child: Center(
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(20),
-  //             child: Container(
-  //               decoration: BoxDecoration(
-  //                 gradient: const LinearGradient(
-  //                   colors: [
-  //                     Color(0xFFF8F4F0),
-  //                     Color(0xFFF0E9E4),
-  //                     Color(0xFFEAE4DF),
-  //                   ],
-  //                 ),
-  //                 borderRadius: BorderRadius.circular(30),
-  //               ),
-  //               child: Column(
-  //                 children: [
-  //                   Padding(
-  //                     padding: const EdgeInsets.fromLTRB(24, 28, 24, 16),
-  //                     child: Text(
-  //                       widget.board['name'] ?? 'Board One', // 🔥 Board name from previous page
-  //                       style: const TextStyle(
-  //                         fontSize: 28,
-  //                         fontWeight: FontWeight.bold,
-  //                         color: Color(0xFF4A4A4A),
-  //                       ),
-  //                     ),
-  //                   ),
-  //
-  //                   /// ZIG-ZAG LAYOUT
-  //                   Expanded(
-  //                     child: SingleChildScrollView(
-  //                       padding: const EdgeInsets.symmetric(horizontal: 20),
-  //                       child: Column(
-  //                         children: _buildAlternatingRows(),
-  //                       ),
-  //                     ),
-  //                   ),
-  //
-  //                   const SizedBox(height: 16),
-  //
-  //                   /// EDIT BUTTON
-  //                   Padding(
-  //                     padding: const EdgeInsets.symmetric(horizontal: 20),
-  //                     child: Center(
-  //                       child: OutlinedButton(
-  //                         onPressed: () {
-  //                           _showEditDialog();
-  //                         },
-  //                         style: OutlinedButton.styleFrom(
-  //                           shape: RoundedRectangleBorder(
-  //                             borderRadius: BorderRadius.circular(25),
-  //                           ),
-  //                           padding: const EdgeInsets.symmetric(
-  //                             horizontal: 40,
-  //                             vertical: 14,
-  //                           ),
-  //                         ),
-  //                         child: const Text(
-  //                           'Edit',
-  //                           style: TextStyle(fontSize: 16),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ),
-  //
-  //                   const SizedBox(height: 20),
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  ///
-  ///
-  ///
-  /// todo::: adding back button if the client want
-  ///
-  ///
-  ///
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Color(0xFF4A4A4A),
-            size: 24,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text(
-          widget.board['name'] ?? 'Board One',
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4A4A4A),
-          ),
-        ),
-        centerTitle: true,
-      ),
       body: Stack(
         children: [
           const CustomBackgroundTwo(),
@@ -191,8 +78,17 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                   ),
                   child: Column(
                     children: [
-                      /// Remove the board name from here since it's now in AppBar
-                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 28, 24, 16),
+                        child: Text(
+                          widget.board['name'] ?? 'Board One', // 🔥 Board name from previous page
+                          style:  TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black.withValues(alpha: 0.9),
+                          ),
+                        ),
+                      ),
 
                       /// ZIG-ZAG LAYOUT
                       Expanded(
@@ -204,7 +100,7 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                         ),
                       ),
 
-                      const SizedBox(height: 16),
+                      // const SizedBox(height: 16),
 
                       /// EDIT BUTTON
                       Padding(
@@ -225,7 +121,9 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                             ),
                             child:  Text(
                               'Edit',
-                              style: AppTextStyle.defaultTextStyleBlack,
+                              style: AppTextStyle.defaultTextStyleBlack.copyWith(
+                                fontWeight: FontWeight.bold
+                              )
                             ),
                           ),
                         ),
@@ -429,7 +327,6 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
@@ -488,6 +385,7 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
       ],
     );
   }
+
   /// ALTERNATING ROWS (ZIG-ZAG)
   List<Widget> _buildAlternatingRows() {
     List<Widget> rows = [];
