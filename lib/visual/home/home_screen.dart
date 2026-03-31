@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:subliminal/core/app_text_style.dart';
 import 'dart:io';
 import '../../widget/custom_background_two.dart';
-import 'board_details_screen.dart';
+import '../board_details/board_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
