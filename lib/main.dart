@@ -1,4 +1,5 @@
 /**
+
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:subliminal/visual/main_bottom_nav/main_bottom_nav_screen.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
       home: const MainBottomNavScreen(),
     );
   }
-}*/
+}
+*/
 
 
 
@@ -44,41 +46,29 @@ class MyApp extends StatelessWidget {
 
 
 
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:subliminal/visual/main_bottom_nav/main_bottom_nav_screen.dart';
-
-import 'core/flash_screen.dart';
-import 'core/flash_service.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:system_alert_window/system_alert_window.dart';
+import 'visual/main_bottom_nav/main_bottom_nav_screen.dart';
+import 'visual/settings/settings_dialogue.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-Timer? flashTimer;
 
-void startFlashTimer(int intervalMs) {
-  flashTimer?.cancel();
-  flashTimer = Timer.periodic(Duration(milliseconds: intervalMs), (_) {
-    navigatorKey.currentState?.push(
-      PageRouteBuilder(
-        opaque: false,
-        barrierColor: Colors.transparent,
-        transitionDuration: Duration.zero,
-        reverseTransitionDuration: Duration.zero,
-        pageBuilder: (_, __, ___) => const FlashScreen(),
-      ),
-    );
-  });
-}
-
-void stopFlashTimer() {
-  flashTimer?.cancel();
-  flashTimer = null;
-}
-
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlashService.initialize();
   runApp(const MyApp());
+}
+
+// ⚠️ MUST be top-level in main.dart
+@pragma("vm:entry-point")
+void overlayMain() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FlashOverlayWidget(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -87,7 +77,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Free Trial App',
+      title: 'Subliminal',
       navigatorKey: navigatorKey,
       theme: ThemeData(
         primarySwatch: Colors.blue,

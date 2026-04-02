@@ -28,21 +28,22 @@ class _MeditationScreenState extends State<MeditationScreen> {
     });
   }
 
+
+
   void _showSettingsDialog() {
     showDialog(
       context: context,
-      builder: (context) => SettingsDialog(
+      builder: (context) => SettingsDialogSystem(  // Changed to SettingsDialogSystem
         settings: _currentSettings,
         onSave: (newSettings) {
           setState(() {
             _currentSettings = newSettings;
           });
-          // You can also navigate to the meditation session screen here
-          // or start the meditation session with the new settings
         },
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

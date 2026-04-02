@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:subliminal/core/app_text_style.dart';
 import '../../models/settings_model.dart';
@@ -305,7 +306,7 @@ class HomeCenterButton {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return SettingsDialog(
+        return SettingsDialogSystem(
           settings: settings,
           onSave: (updatedSettings) {
             onSettingsSaved(updatedSettings);
@@ -348,3 +349,6 @@ class HomeCenterButton {
     );
   }
 }
+
+
+
