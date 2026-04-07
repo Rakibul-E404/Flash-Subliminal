@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:subliminal/core/app_text_style.dart';
 import 'dart:io';
+import 'dart:ui' as ui;
 import '../../widget/custom_background_two.dart';
 import '../board_details/board_details_screen.dart';
 
@@ -437,144 +439,160 @@ class _HomeScreenState extends State<HomeScreen> {
           SafeArea(
             child: Center(
               child: Padding(
-                // padding: const EdgeInsets.all(24.0),
                 padding: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 80.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFFF8F4F0),
-                        Color(0xFFF0E9E4),
-                        Color(0xFFEAE4DF),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
-                        blurRadius: 20,
-                        spreadRadius: 2,
-                      ),
-                    ],
-                  ),
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          'My Boards',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF4A4A4A),
-                          ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: BackdropFilter(
+                    filter: ui.ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.white.withValues(alpha: 0.25),
+                            Colors.white.withValues(alpha: 0.15),
+                            Colors.white.withValues(alpha: 0.1),
+                          ],
                         ),
-                        const SizedBox(height: 24),
-
-                        // Zig-Zag Layout with same height, different widths
-                        _buildZigZagGrid(),
-
-                        // Mode-specific buttons
-                        if (_currentMode != 'normal')
-                          Row(
-                            children: [
-                              Expanded(
-                                child: OutlinedButton(
-                                  onPressed: _cancelMode,
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: Colors.black,
-                                    side: const BorderSide(color: Colors.grey),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 16,
-                                    ),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.3),
+                          width: 1.5,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.1),
+                            blurRadius: 20,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'My Boards',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 10,
+                                    color: Colors.black26,
+                                    offset: Offset(0, 2),
                                   ),
-                                  child: const Text(
-                                    'Cancel',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
+                                ],
                               ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    gradient: const LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Color(0xff7d91aa),
-                                        Color(0xffb3bfaf),
-                                      ],
-                                    ),
-                                  ),
-                                  child: ElevatedButton(
-                                    onPressed: _saveModeChanges,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.transparent,
-                                      foregroundColor: Colors.white,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(25),
+                            ),
+                            const SizedBox(height: 24),
+
+                            // Zig-Zag Layout with same height, different widths
+                            _buildZigZagGrid(),
+
+                            // Mode-specific buttons
+                            if (_currentMode != 'normal')
+                              Padding(
+                                padding: const EdgeInsets.only(top: 16),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: OutlinedButton(
+                                        onPressed: _cancelMode,
+                                        style: OutlinedButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          side: const BorderSide(color: Colors.white54),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(25),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 16,
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          'Cancel',
+                                          style: TextStyle(fontSize: 18, color: Colors.white),
+                                        ),
                                       ),
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 16,
-                                      ),
                                     ),
-                                    child: _currentMode == 'delete'
-                                        ? const Text(
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(25),
+                                          gradient: const LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [Color(0xff7d91aa), Color(0xffb3bfaf)],
+                                          ),
+                                        ),
+                                        child: ElevatedButton(
+                                          onPressed: _saveModeChanges,
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.transparent,
+                                            foregroundColor: Colors.white,
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(25),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 16,
+                                            ),
+                                          ),
+                                          child: _currentMode == 'delete'
+                                              ? const Text(
                                             'Done',
                                             style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           )
-                                        : const Text(
+                                              : const Text(
                                             'Save',
                                             style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
-                                  ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          )
-                        else
-                          Center(
-                            child: SizedBox(
-                              width: 150,
-                              child: ElevatedButton(
-                                onPressed: _showBoardSettingsDialog,
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  elevation: 2,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 40,
-                                    vertical: 18,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                ),
-                                child: Text(
-                                  'Edit',
-                                  style: AppTextStyle.defaultTextStyleBlack
-                                      .copyWith(
+                              )
+                            else
+                              Center(
+                                child: SizedBox(
+                                  width: 150,
+                                  child: ElevatedButton(
+                                    onPressed: _showBoardSettingsDialog,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white.withValues(alpha: 0.9),
+                                      foregroundColor: const Color(0xFF4A4A4A),
+                                      elevation: 2,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 40,
+                                        vertical: 18,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(40),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Edit',
+                                      style: AppTextStyle.defaultTextStyleBlack.copyWith(
                                         fontWeight: FontWeight.bold,
                                       ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                      ],
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -609,10 +627,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Build individual row with zig-zag pattern (same height, different widths)
   Widget _buildZigZagRow(
-    List<Map<String, dynamic>> rowItems,
-    bool isEvenRow,
-    int startIndex,
-  ) {
+      List<Map<String, dynamic>> rowItems,
+      bool isEvenRow,
+      int startIndex,
+      ) {
     // Fixed height for all items
     const double itemHeight = 180;
 
@@ -686,41 +704,34 @@ class _HomeScreenState extends State<HomeScreen> {
         height: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Image Container
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image Container
+              Expanded(
                 child: _buildImageContent(board),
               ),
-            ),
-            const SizedBox(height: 8),
-            // Board Name
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                board['name'],
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF4A4A4A),
+              const SizedBox(height: 8),
+              // Board Name
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Text(
+                  board['name'],
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF4A4A4A),
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            const SizedBox(height: 4),
-          ],
+              const SizedBox(height: 4),
+            ],
+          ),
         ),
       ),
     );
@@ -741,52 +752,55 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
               child: _buildImageContent(board),
             ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _nameControllers[index],
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF4A4A4A),
-                  ),
-                  decoration: const InputDecoration(
-                    isDense: true,
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 4,
-                      horizontal: 4,
-                    ),
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFE0D5CF)),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFE0D5CF)),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0xFF9DB4C0),
-                        width: 2,
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _nameControllers[index],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF4A4A4A),
+                      ),
+                      decoration: const InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 4,
+                          horizontal: 4,
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFE0D5CF)),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFE0D5CF)),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFF9DB4C0),
+                            width: 2,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  const Icon(Icons.edit, size: 18, color: Color(0xFF9DB4C0)),
+                ],
               ),
-              const Icon(Icons.edit, size: 18, color: Color(0xFF9DB4C0)),
-            ],
-          ),
-          const SizedBox(height: 4),
-        ],
+            ),
+            const SizedBox(height: 4),
+          ],
+        ),
       ),
     );
   }
@@ -810,12 +824,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -841,6 +855,84 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Text(
+                  board['name'],
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF4A4A4A),
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(height: 4),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Delete board item
+  Widget _buildDeleteBoardItem(Map<String, dynamic> board, int index) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  _buildImageContent(board),
+                  // Close button at top right
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: GestureDetector(
+                      onTap: () {
+                        _deleteBoard(index);
+                      },
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.95),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: const Icon(
+                          Icons.close,
+                          size: 18,
+                          color: Color(0xFFE57373),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 8),
             Padding(
@@ -863,84 +955,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Delete board item
-  Widget _buildDeleteBoardItem(Map<String, dynamic> board, int index) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: _buildImageContent(board),
-                ),
-                // Close button at top right
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: GestureDetector(
-                    onTap: () {
-                      _deleteBoard(index);
-                    },
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.95),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: const Icon(
-                        Icons.close,
-                        size: 18,
-                        color: Color(0xFFE57373),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: Text(
-              board['name'],
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF4A4A4A),
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          const SizedBox(height: 4),
-        ],
-      ),
-    );
-  }
-
   Widget _buildImageContent(Map<String, dynamic> board) {
     if (board['type'] == 'image') {
       if (board['imageFile'] != null) {
@@ -948,6 +962,7 @@ class _HomeScreenState extends State<HomeScreen> {
           board['imageFile'],
           fit: BoxFit.cover,
           width: double.infinity,
+          height: double.infinity,
           errorBuilder: (context, error, stackTrace) {
             return Container(
               color: const Color(0xFFE8DCD6),
@@ -962,6 +977,7 @@ class _HomeScreenState extends State<HomeScreen> {
           board['assetPath'],
           fit: BoxFit.cover,
           width: double.infinity,
+          height: double.infinity,
           errorBuilder: (context, error, stackTrace) {
             return Container(
               color: const Color(0xFFE8DCD6),
@@ -976,6 +992,7 @@ class _HomeScreenState extends State<HomeScreen> {
           File(board['assetPath']),
           fit: BoxFit.cover,
           width: double.infinity,
+          height: double.infinity,
           errorBuilder: (context, error, stackTrace) {
             return Container(
               color: const Color(0xFFE8DCD6),
