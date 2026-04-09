@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:subliminal/auth/sign_up_screen.dart';
 import 'package:video_player/video_player.dart';
 import '../free_trial_info/free_trial_info_screen.dart';
 
@@ -73,7 +74,8 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const FreeTrialInfoScreen(),
+          // builder: (context) => const FreeTrialInfoScreen(),
+          builder: (context) => const SignUpScreen(),
         ),
       );
     }

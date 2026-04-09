@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:subliminal/visual/splash/splash_screen.dart';
 import 'visual/main_bottom_nav/main_bottom_nav_screen.dart';
 import 'visual/settings/settings_dialogue.dart';
 
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MainBottomNavScreen(),
+      // home: const SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
