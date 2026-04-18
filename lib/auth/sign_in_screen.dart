@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:subliminal/visual/home/home_screen.dart';
+import 'package:subliminal/visual/main_bottom_nav/main_bottom_nav_screen.dart';
 import '../widget/custom_background.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -118,7 +122,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             height: 52,
                             child: ElevatedButton(
                               onPressed: () {
-                                // TODO: Sign in logic
+                                Get.to(()=>MainBottomNavScreen());
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.transparent,

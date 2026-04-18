@@ -1,6 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:subliminal/visual/settings/about_screen.dart';
+import 'package:subliminal/visual/settings/contact_screen.dart';
+import 'package:subliminal/visual/settings/dedication_screen.dart';
+import 'package:subliminal/visual/settings/faq_screen.dart';
+import 'package:subliminal/visual/settings/privacy_policy_screen.dart';
+import 'package:subliminal/visual/settings/reminders_screen.dart';
+import 'package:subliminal/visual/settings/subscription_screen.dart';
+import 'package:subliminal/visual/settings/terms_condition_screen.dart';
+import 'package:subliminal/visual/settings/tips_screen.dart';
 import '../../widget/custom_background.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:subliminal/core/app_text_style.dart';
@@ -185,11 +194,36 @@ class SettingsItem extends StatelessWidget {
 
   void _handleTap(BuildContext context, String title) {
     if (title == 'Account') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AccountScreen()),
-      );
-    } else {
+      Get.to(()=> const AccountScreen());
+    }
+    else if(title == 'Reminders'){
+      Get.to(()=> const RemindersScreen());
+    }
+    else if(title == 'Subscription'){
+      Get.to(()=> const SubscriptionScreen());
+    }
+    else if(title == 'Dedication'){
+      Get.to(()=> const DedicationScreen());
+    }
+    else if(title == 'About Us'){
+      Get.to(()=> const AboutScreen());
+    }
+    else if(title == 'FAQs'){
+      Get.to(()=> const FaqScreen());
+    }
+    else if(title == 'Contact'){
+      Get.to(()=> const ContactScreen());
+    }
+    else if(title == 'Tips'){
+      Get.to(()=> const TipsScreen());
+    }
+    else if(title == 'Terms & Condition'){
+      Get.to(()=> const TermsConditionScreen());
+    }
+    else if(title == 'Privacy Policy'){
+      Get.to(()=> const PrivacyPolicyScreen());
+    }
+    else {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Opening $title...')));
