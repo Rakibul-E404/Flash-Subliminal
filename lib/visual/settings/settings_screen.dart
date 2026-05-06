@@ -1,10 +1,20 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:subliminal/visual/settings/about_screen.dart';
+import 'package:subliminal/visual/settings/contact_screen.dart';
+import 'package:subliminal/visual/settings/dedication_screen.dart';
+import 'package:subliminal/visual/settings/faq_screen.dart';
+import 'package:subliminal/visual/settings/privacy_policy_screen.dart';
+import 'package:subliminal/visual/settings/reminders_screen.dart';
+import 'package:subliminal/visual/settings/subscription_screen.dart';
+import 'package:subliminal/visual/settings/terms_condition_screen.dart';
+import 'package:subliminal/visual/settings/tips_screen.dart';
 import '../../widget/custom_background.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:subliminal/core/app_text_style.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'account_screen.dart'; // Import the account screen
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -16,10 +26,10 @@ class SettingsScreen extends StatelessWidget {
       body: CustomBackground(
         child: Column(
           children: [
-            // Centered title with home button - matches screenshot layout
+            // Centered title
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 20 /* bottom: 20*/),
+              padding: const EdgeInsets.only(top: 20),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -28,27 +38,15 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               child: SafeArea(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
+                child: Center(  // Changed to Center widget
+                  child: Text(
+                    'Settings',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
-                    Text(
-                      'Settings',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 40,
-                    )
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -58,7 +56,7 @@ class SettingsScreen extends StatelessWidget {
                   horizontal: 20,
                   vertical: 5,
                 ),
-                children: const [
+                children: [
                   SettingsItem(icon: CupertinoIcons.person_alt_circle, title: 'Account'),
                   SettingsItem(
                     icon: Icons.notifications,
@@ -90,13 +88,27 @@ class SettingsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: IconButton(onPressed: (){
-            //     Get.back();
-            //   }, icon: Icon(Icons.home,color: Colors.white,size: 20,)),
-            // ),
-            SizedBox(height: 20),
+            // Home button at bottom center
+            Padding(
+              padding: const EdgeInsets.only(bottom: 60),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    Get.back(); // Navigate back to home screen
+                  },
+                  borderRadius: BorderRadius.circular(30),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: const Icon(
+                      Icons.home,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -128,7 +140,7 @@ class SettingsItem extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 10,
-                ), // Button-like padding
+                ),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -181,8 +193,40 @@ class SettingsItem extends StatelessWidget {
   }
 
   void _handleTap(BuildContext context, String title) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Opening $title...')));
+    if (title == 'Account') {
+      Get.to(()=> const AccountScreen());
+    }
+    else if(title == 'Reminders'){
+      Get.to(()=> const RemindersScreen());
+    }
+    else if(title == 'Subscription'){
+      Get.to(()=> const SubscriptionScreen());
+    }
+    else if(title == 'Dedication'){
+      Get.to(()=> const DedicationScreen());
+    }
+    else if(title == 'About Us'){
+      Get.to(()=> const AboutScreen());
+    }
+    else if(title == 'FAQs'){
+      Get.to(()=> const FaqScreen());
+    }
+    else if(title == 'Contact'){
+      Get.to(()=> const ContactScreen());
+    }
+    else if(title == 'Tips'){
+      Get.to(()=> const TipsScreen());
+    }
+    else if(title == 'Terms & Condition'){
+      Get.to(()=> const TermsConditionScreen());
+    }
+    else if(title == 'Privacy Policy'){
+      Get.to(()=> const PrivacyPolicyScreen());
+    }
+    else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Opening $title...')));
+    }
   }
 }

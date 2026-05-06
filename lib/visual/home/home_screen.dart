@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:subliminal/core/app_text_style.dart';
 import 'dart:io';
+import 'dart:ui' as ui;
 import '../../widget/custom_background_two.dart';
 import '../board_details/board_details_screen.dart';
 
@@ -35,19 +37,33 @@ class _HomeScreenState extends State<HomeScreen> {
       'imageFile': null,
     },
     {
-      'name': 'Board Three',
+      'name': 'Believe in Yourself',
       'type': 'image',
       'assetPath': 'assets/images/image3.png',
       'isLocal': true,
       'imageFile': null,
     },
     {
-      'name': 'Board Four',
+      'name': 'Board Three',
       'type': 'image',
       'assetPath': 'assets/images/image4.png',
       'isLocal': true,
       'imageFile': null,
-    }
+    },
+    {
+      'name': 'Board Four',
+      'type': 'image',
+      'assetPath': 'assets/images/image1.png',
+      'isLocal': true,
+      'imageFile': null,
+    },
+    {
+      'name': 'Board Five',
+      'type': 'image',
+      'assetPath': 'assets/images/image2.png',
+      'isLocal': true,
+      'imageFile': null,
+    },
   ];
 
   // Text controllers for rename mode
@@ -60,9 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _initializeControllers() {
-    _nameControllers = boards.map((board) =>
-        TextEditingController(text: board['name'])
-    ).toList();
+    _nameControllers = boards
+        .map((board) => TextEditingController(text: board['name']))
+        .toList();
   }
 
   @override
@@ -79,9 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         contentPadding: EdgeInsets.zero,
         content: Container(
           width: double.maxFinite,
@@ -116,7 +130,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       leading: const Icon(Icons.edit, color: Color(0xFF9DB4C0)),
                       title: const Text(
                         'Rename Board',
-                        style: TextStyle(fontSize: 16, color: Color(0xFF4A4A4A)),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF4A4A4A),
+                        ),
                       ),
                       onTap: () {
                         Navigator.pop(context);
@@ -128,10 +145,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      leading: const Icon(Icons.image, color: Color(0xFF9DB4C0)),
+                      leading: const Icon(
+                        Icons.image,
+                        color: Color(0xFF9DB4C0),
+                      ),
                       title: const Text(
                         'Change Cover Image',
-                        style: TextStyle(fontSize: 16, color: Color(0xFF4A4A4A)),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF4A4A4A),
+                        ),
                       ),
                       onTap: () {
                         Navigator.pop(context);
@@ -142,10 +165,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      leading: const Icon(Icons.delete, color: Color(0xFF9DB4C0)),
+                      leading: const Icon(
+                        Icons.delete,
+                        color: Color(0xFF9DB4C0),
+                      ),
                       title: const Text(
                         'Delete Board',
-                        style: TextStyle(fontSize: 16, color: Color(0xFF4A4A4A)),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF4A4A4A),
+                        ),
                       ),
                       onTap: () {
                         Navigator.pop(context);
@@ -169,10 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(Icons.add, color: Color(0xFF9DB4C0)),
                 label: const Text(
                   'Add New Board',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFF4A4A4A),
-                  ),
+                  style: TextStyle(fontSize: 16, color: Color(0xFF4A4A4A)),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFF9DB4C0), width: 1.5),
@@ -219,10 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         gradient: const LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xff7d91aa),
-                            Color(0xffb3bfaf),
-                          ],
+                          colors: [Color(0xff7d91aa), Color(0xffb3bfaf)],
                         ),
                       ),
                       child: ElevatedButton(
@@ -241,7 +264,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: const Text(
                           'Save',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
@@ -307,9 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text(
           'Delete Board',
           style: TextStyle(
@@ -320,17 +344,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         content: const Text(
           'Are you sure you want to delete this board?',
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFF6B6B6B),
-          ),
+          style: TextStyle(fontSize: 16, color: Color(0xFF6B6B6B)),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.grey,
-            ),
+            style: TextButton.styleFrom(foregroundColor: Colors.grey),
             child: const Text('Cancel'),
           ),
           ElevatedButton(
@@ -413,419 +432,526 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Stack(
-      children: [
-        const CustomBackgroundTwo(),
-        SafeArea(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xFFF8F4F0),
-                      Color(0xFFF0E9E4),
-                      Color(0xFFEAE4DF),
-                    ],
-                  ),
+    return Scaffold(
+      body: Stack(
+        children: [
+          const CustomBackgroundTwo(),
+          SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 80.0),
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.08),
-                      blurRadius: 20,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(28),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        'My Boards',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF4A4A4A),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Boards Grid
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                          childAspectRatio: 0.85,
-                        ),
-                        itemCount: boards.length,
-                        itemBuilder: (context, index) {
-                          if (_currentMode == 'rename') {
-                            return _buildRenameBoardItem(index);
-                          } else if (_currentMode == 'changeCover') {
-                            return _buildChangeCoverBoardItem(index);
-                          } else if (_currentMode == 'delete') {
-                            return _buildDeleteBoardItem(index);
-                          } else {
-                            return _buildNormalBoardItem(index);
-                          }
-                        },
-                      ),
-
-                      const SizedBox(height: 28),
-
-                      // Mode-specific buttons
-                      if (_currentMode != 'normal')
-                        Row(
-                          children: [
-                            Expanded(
-                              child: OutlinedButton(
-                                onPressed: _cancelMode,
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.black,
-                                  side: const BorderSide(color: Colors.grey),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
-                                ),
-                                child: const Text(
-                                  'Cancel',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Color(0xff7d91aa),
-                                      Color(0xffb3bfaf),
-                                    ],
-                                  ),
-                                ),
-                                child: ElevatedButton(
-                                  onPressed: _saveModeChanges,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.transparent,
-                                    foregroundColor: Colors.white,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(vertical: 16),
-                                  ),
-                                  child: _currentMode == 'delete'
-                                      ? const Text(
-                                    'Done',
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                                  )
-                                      : const Text(
-                                    'Save',
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              ),
-                            ),
+                  child: BackdropFilter(
+                    filter: ui.ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.white.withValues(alpha: 0.25),
+                            Colors.white.withValues(alpha: 0.15),
+                            Colors.white.withValues(alpha: 0.1),
                           ],
-                        )
-                      else
-                        Center(
-                          child: SizedBox(
-                            width: 150,
-                            child: ElevatedButton(
-                              onPressed: _showBoardSettingsDialog,
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                elevation: 2,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 40,
-                                  vertical: 18,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                              ),
-                              child:  Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(width: 8),
-                                  Text(
-                                    'Edit',
-                                    style: AppTextStyle.defaultTextStyleBlack.copyWith(
-                                      fontWeight: FontWeight.bold
-                                    ),
+                        ),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.3),
+                          width: 1.5,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.1),
+                            blurRadius: 20,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'My Boards',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 10,
+                                    color: Colors.black26,
+                                    offset: Offset(0, 2),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
+                            const SizedBox(height: 24),
+
+                            // Zig-Zag Layout with same height, different widths
+                            _buildZigZagGrid(),
+
+                            // Mode-specific buttons
+                            if (_currentMode != 'normal')
+                              Padding(
+                                padding: const EdgeInsets.only(top: 16),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: OutlinedButton(
+                                        onPressed: _cancelMode,
+                                        style: OutlinedButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          side: const BorderSide(color: Colors.white54),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(25),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 16,
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          'Cancel',
+                                          style: TextStyle(fontSize: 18, color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(25),
+                                          gradient: const LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [Color(0xff7d91aa), Color(0xffb3bfaf)],
+                                          ),
+                                        ),
+                                        child: ElevatedButton(
+                                          onPressed: _saveModeChanges,
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.transparent,
+                                            foregroundColor: Colors.white,
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(25),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 16,
+                                            ),
+                                          ),
+                                          child: _currentMode == 'delete'
+                                              ? const Text(
+                                            'Done',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )
+                                              : const Text(
+                                            'Save',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            else
+                              Center(
+                                child: SizedBox(
+                                  width: 150,
+                                  child: ElevatedButton(
+                                    onPressed: _showBoardSettingsDialog,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white.withValues(alpha: 0.9),
+                                      foregroundColor: const Color(0xFF4A4A4A),
+                                      elevation: 2,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 40,
+                                        vertical: 18,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(40),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Edit',
+                                      style: AppTextStyle.defaultTextStyleBlack.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),);
-  }
-
-  // Normal board item (default view)
-  Widget _buildNormalBoardItem(int index) {
-    final board = boards[index];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: GestureDetector(
-            // In _buildNormalBoardItem method, update the onTap:
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BoardDetailScreen(board: board),
-                ),
-              );
-            },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: _buildImageContent(board),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          board['name'],
-          style: const TextStyle(
-            fontSize: 16,
-            color: Color(0xFF6B6B6B),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
-
-
-
-
-
-  // Rename board item (with editable text fields)
-  Widget _buildRenameBoardItem(int index) {
-    final board = boards[index];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: _buildImageContent(board),
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _nameControllers[index],
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF6B6B6B),
-                  fontWeight: FontWeight.w500,
-                ),
-                // decoration: const InputDecoration(
-                //   isDense: true,
-                //   contentPadding: EdgeInsets.symmetric(vertical: 4),
-                //   border: InputBorder.none,
-                //   enabledBorder: UnderlineInputBorder(
-                //     borderSide: BorderSide(color: Color(0xFFE0D5CF)),
-                //   ),
-                //   focusedBorder: UnderlineInputBorder(
-                //     borderSide: BorderSide(color: Color(0xFF9DB4C0), width: 2),
-                //   ),
-                // ),
-              ),
-            ),
-            const Icon(
-              Icons.edit,
-              size: 18,
-              color: Color(0xFF9DB4C0),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  // Change cover image board item (with camera icon overlay)
-  Widget _buildChangeCoverBoardItem(int index) {
-    final board = boards[index];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: GestureDetector(
-            onTap: () {
-              _pickImageFromGallery(index);
-            },
-            child: Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.1),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        _buildImageContent(board),
-                        // Dark overlay
-                        Container(
-                          color: Colors.black.withOpacity(0.4),
-                        ),
-                        // Camera icon
-                        const Center(
-                          child: Icon(
-                            Icons.camera_alt,
-                            size: 50,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          board['name'],
-          style: const TextStyle(
-            fontSize: 16,
-            color: Color(0xFF6B6B6B),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
-
-  // Delete board item (with close button at top right)
-  Widget _buildDeleteBoardItem(int index) {
-    final board = boards[index];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
                       ),
-                    ],
-                  ),
-                  child: _buildImageContent(board),
-                ),
-              ),
-              // Close button at top right
-              Positioned(
-                top: 8,
-                right: 8,
-                child: GestureDetector(
-                  onTap: () {
-                    _deleteBoard(index);
-                  },
-                  child: Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.close,
-                      size: 22,
-                      color: Color(0xFF78909C),
                     ),
                   ),
                 ),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Build Zig-Zag Grid with same height, alternating widths
+  Widget _buildZigZagGrid() {
+    List<Widget> rows = [];
+    int itemsPerRow = 2;
+
+    for (int i = 0; i < boards.length; i += itemsPerRow) {
+      int rowIndex = i ~/ itemsPerRow;
+      bool isEvenRow = rowIndex % 2 == 0;
+
+      // Get items for this row (up to 2 items)
+      List<Map<String, dynamic>> rowItems = [];
+      for (int j = 0; j < itemsPerRow && i + j < boards.length; j++) {
+        rowItems.add(boards[i + j]);
+      }
+
+      rows.add(_buildZigZagRow(rowItems, isEvenRow, i));
+    }
+
+    return Column(children: rows);
+  }
+
+  // Build individual row with zig-zag pattern (same height, different widths)
+  Widget _buildZigZagRow(
+      List<Map<String, dynamic>> rowItems,
+      bool isEvenRow,
+      int startIndex,
+      ) {
+    // Fixed height for all items
+    const double itemHeight = 180;
+
+    if (rowItems.length == 1) {
+      // Single item - full width
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: SizedBox(
+          height: itemHeight,
+          child: Row(
+            children: [
+              Expanded(child: _buildBoardItem(rowItems[0], startIndex)),
             ],
           ),
         ),
-        const SizedBox(height: 8),
-        Text(
-          board['name'],
-          style: const TextStyle(
-            fontSize: 16,
-            color: Color(0xFF6B6B6B),
-            fontWeight: FontWeight.w500,
+      );
+    }
+
+    // For even rows: left is wider (flex 6), right is narrower (flex 4)
+    // For odd rows: left is narrower (flex 4), right is wider (flex 6)
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: SizedBox(
+        height: itemHeight,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Left item
+            Expanded(
+              flex: isEvenRow ? 6 : 4,
+              child: _buildBoardItem(rowItems[0], startIndex),
+            ),
+            const SizedBox(width: 16),
+            // Right item
+            Expanded(
+              flex: isEvenRow ? 4 : 6,
+              child: _buildBoardItem(rowItems[1], startIndex + 1),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Build individual board item based on current mode
+  Widget _buildBoardItem(Map<String, dynamic> board, int index) {
+    if (_currentMode == 'rename') {
+      return _buildRenameBoardItem(board, index);
+    } else if (_currentMode == 'changeCover') {
+      return _buildChangeCoverBoardItem(board, index);
+    } else if (_currentMode == 'delete') {
+      return _buildDeleteBoardItem(board, index);
+    } else {
+      return _buildNormalBoardItem(board, index);
+    }
+  }
+
+  // Normal board item
+  Widget _buildNormalBoardItem(Map<String, dynamic> board, int index) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BoardDetailScreen(board: board),
+          ),
+        );
+      },
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image Container
+              Expanded(
+                child: _buildImageContent(board),
+              ),
+              const SizedBox(height: 8),
+              // Board Name
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Text(
+                  board['name'],
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF4A4A4A),
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(height: 4),
+            ],
           ),
         ),
-      ],
+      ),
+    );
+  }
+
+  // Rename board item
+  Widget _buildRenameBoardItem(Map<String, dynamic> board, int index) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _buildImageContent(board),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _nameControllers[index],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF4A4A4A),
+                      ),
+                      decoration: const InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 4,
+                          horizontal: 4,
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFE0D5CF)),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFE0D5CF)),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFF9DB4C0),
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Icon(Icons.edit, size: 18, color: Color(0xFF9DB4C0)),
+                ],
+              ),
+            ),
+            const SizedBox(height: 4),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Change cover board item
+  Widget _buildChangeCoverBoardItem(Map<String, dynamic> board, int index) {
+    return GestureDetector(
+      onTap: () {
+        _pickImageFromGallery(index);
+      },
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    _buildImageContent(board),
+                    Container(color: Colors.black.withOpacity(0.4)),
+                    const Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.camera_alt, size: 40, color: Colors.white),
+                          SizedBox(height: 8),
+                          Text(
+                            'Change Cover',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Text(
+                  board['name'],
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF4A4A4A),
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(height: 4),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Delete board item
+  Widget _buildDeleteBoardItem(Map<String, dynamic> board, int index) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  _buildImageContent(board),
+                  // Close button at top right
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: GestureDetector(
+                      onTap: () {
+                        _deleteBoard(index);
+                      },
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.95),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: const Icon(
+                          Icons.close,
+                          size: 18,
+                          color: Color(0xFFE57373),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Text(
+                board['name'],
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF4A4A4A),
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(height: 4),
+          ],
+        ),
+      ),
     );
   }
 
@@ -836,11 +962,12 @@ class _HomeScreenState extends State<HomeScreen> {
           board['imageFile'],
           fit: BoxFit.cover,
           width: double.infinity,
+          height: double.infinity,
           errorBuilder: (context, error, stackTrace) {
             return Container(
               color: const Color(0xFFE8DCD6),
               child: const Center(
-                child: Icon(Icons.broken_image, color: Colors.grey),
+                child: Icon(Icons.broken_image, size: 32, color: Colors.grey),
               ),
             );
           },
@@ -850,11 +977,12 @@ class _HomeScreenState extends State<HomeScreen> {
           board['assetPath'],
           fit: BoxFit.cover,
           width: double.infinity,
+          height: double.infinity,
           errorBuilder: (context, error, stackTrace) {
             return Container(
               color: const Color(0xFFE8DCD6),
               child: const Center(
-                child: Icon(Icons.image, color: Colors.grey),
+                child: Icon(Icons.image, size: 32, color: Colors.grey),
               ),
             );
           },
@@ -864,11 +992,12 @@ class _HomeScreenState extends State<HomeScreen> {
           File(board['assetPath']),
           fit: BoxFit.cover,
           width: double.infinity,
+          height: double.infinity,
           errorBuilder: (context, error, stackTrace) {
             return Container(
               color: const Color(0xFFE8DCD6),
               child: const Center(
-                child: Icon(Icons.broken_image, color: Colors.grey),
+                child: Icon(Icons.broken_image, size: 32, color: Colors.grey),
               ),
             );
           },
@@ -876,27 +1005,28 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
+    // Default placeholder for boards without images
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFFF0EBE5),
-            Color(0xFFE6DFD8),
-          ],
+          colors: [Color(0xFFF0EBE5), Color(0xFFE6DFD8)],
         ),
       ),
       child: const Center(
-        child: Icon(
-          Icons.camera_alt,
-          size: 40,
-          color: Color(0xFF8B7355),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.photo_library, size: 40, color: Color(0xFF8B7355)),
+            SizedBox(height: 8),
+            Text(
+              'No Image',
+              style: TextStyle(fontSize: 12, color: Color(0xFF8B7355)),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-
-
