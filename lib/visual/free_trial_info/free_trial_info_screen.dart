@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:subliminal/visual/main_bottom_nav/main_bottom_nav_screen.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import '../../auth/sign_in_screen.dart';
 import '../../widget/custom_background.dart';
+import '../../widget/custom_button.dart';
 
 class FreeTrialInfoScreen extends StatefulWidget {
   const FreeTrialInfoScreen({super.key});
@@ -17,318 +18,237 @@ class _FreeTrialInfoScreenState extends State<FreeTrialInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomBackground(
+      body: CustomBackground( // ✅ USING YOUR BACKGROUND
         child: SafeArea(
-          child: Column(
-            children: [
-              if (_currentStep == 0)
-                Align(
-                  alignment: Alignment.topRight,
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _currentStep = 1;
-                      });
-                    },
-                    child: const Text(
-                      'Skip',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ),
-              Expanded(
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: _currentStep == 0
-                      ? _buildFirstPage()
-                      : _buildSecondPage(),
-                ),
-              ),
-            ],
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 400),
+            child: _currentStep == 0
+                ? _buildFirstPage()
+                : _buildSecondPage(),
           ),
         ),
       ),
     );
   }
 
+  /// ================= FIRST PAGE =================
   Widget _buildFirstPage() {
-    return SingleChildScrollView(
+    return Padding(
       key: const ValueKey(0),
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 40),
+          /// Skip
+          Align(
+            alignment: Alignment.topRight,
+            child: TextButton(
+              onPressed: () {
+                setState(() => _currentStep = 1);
+              },
+              child: const Text(
+                "Skip",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+
+          const Spacer(),
+
+          /// Title
           const Text(
             'Souliminal subtly\nflashes your positive images\nwhile you use your device.',
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              height: 1.2,
+              fontSize: 22,
+              fontWeight: FontWeight.w500,
+              height: 1.4,
             ),
           ),
+
           const SizedBox(height: 20),
-          const Text(
-            'This isn\'t traditional visionboards.\nThis isn\'t scripting.\nThis is manifestation evolved\non a whole new level.',
+
+          /// Description
+          Text(
+            'This isn’t traditional visionboards.\nThis isn’t scripting.\nThis is manifestation evolved\non a whole new level.',
+            textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white70,
-              fontSize: 16,
-              height: 1.5,
+              color: Colors.white.withOpacity(0.7),
+              fontSize: 14,
+              height: 1.6,
             ),
           ),
-          const SizedBox(height: 60),
-          SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _currentStep = 1;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              child: const Text(
-                'Next',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+
+          const Spacer(),
+
+          /// Next Button
+          GradientBorderButton(
+            text: "Next",
+            onTap: () {
+              setState(() => _currentStep = 1);
+            },
           ),
+
           const SizedBox(height: 40),
         ],
       ),
     );
   }
 
+  /// ================= SECOND PAGE =================
   Widget _buildSecondPage() {
-    return SingleChildScrollView(
+    return Padding(
       key: const ValueKey(1),
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
+
+          /// Title
           const Text(
             'Begin Your\nSubconscious Reset',
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              height: 1.2,
+              fontSize: 26,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 20),
-          const Text(
+
+          const SizedBox(height: 16),
+
+          /// Subtitle
+          Text(
             '7 days free.\nYour transformation continues with full access - the choice is yours.',
+            textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white70,
-              fontSize: 16,
+              color: Colors.white.withOpacity(0.7),
+              fontSize: 14,
               height: 1.5,
             ),
           ),
-          const SizedBox(height: 40),
-          _buildPricingCard(
-            title: 'Monthly',
-            price: '\$9.99/month',
-            isPopular: false,
+
+          const SizedBox(height: 30),
+
+          // /// Monthly
+          // const Text(
+          //   'Monthly\n\$9.99/month',
+          //   textAlign: TextAlign.center,
+          //   style: TextStyle(
+          //     color: Colors.white,
+          //     fontSize: 18,
+          //     height: 1.4,
+          //   ),
+          // ),
+
+          const SizedBox(height: 30),
+
+          /// Glow Pricing
+          _glowYearly(),
+
+          const Spacer(),
+
+
+          /// CTA Button
+          GradientBorderButton(
+            text: "Start My Free Trial →",
+            onTap: () {
+              Get.to(() => SignInScreen());
+            },
           ),
-          const SizedBox(height: 16),
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              _buildPricingCard(
-                title: 'Yearly',
-                price: '\$59.99/year',
-                isPopular: true,
-              ),
-              Positioned(
-                top: -12,
-                right: 20,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Text(
-                    'Best Value',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 40),
-          SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: ElevatedButton(
-              onPressed: (){
-                Get.to(()=> MainBottomNavScreen());
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Start My Free Trial',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Icon(Icons.arrow_forward, size: 20),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Center(
-            child: Text(
-              '\$9.99/month after trial. Cancel anytime.',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.6),
-                fontSize: 12,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
+
           const SizedBox(height: 30),
         ],
       ),
     );
   }
 
-  Widget _buildPricingCard({
-    required String title,
-    required String price,
-    required bool isPopular,
-  }) {
-    return GestureDetector(
-      onTap: () => _selectPlan(title.toLowerCase()),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isPopular
-                ? [Colors.white.withOpacity(0.2), Colors.white.withOpacity(0.1)]
-                : [Colors.white.withOpacity(0.1), Colors.white.withOpacity(0.05)],
+  /// ================= GLOW YEARLY =================
+  Widget _glowYearly() {
+    return SizedBox(
+      width: 300,
+      height: 300,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          /// ✅ SVG RING (bigger like design)
+          SvgPicture.asset(
+            'assets/icons/glowing_ring.svg',
+            width: 300,
+            height: 300,
+            fit: BoxFit.contain,
           ),
-          borderRadius: BorderRadius.circular(20),
-          border: isPopular
-              ? Border.all(color: Colors.amber, width: 1.5)
-              : Border.all(color: Colors.white.withOpacity(0.2)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+
+          /// ✅ Monthly text INSIDE ring (top)
+          Positioned(
+            top: 90,
+            child: Column(
+              children: const [
                 Text(
-                  title,
-                  style: const TextStyle(
+                  "Monthly",
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 4),
                 Text(
-                  price,
-                  style: const TextStyle(
+                  "\$9.99",
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 26,
                     fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "/month",
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14,
                   ),
                 ),
               ],
             ),
-            if (isPopular)
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.amber.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Text(
-                  'Save 50%',
-                  style: TextStyle(
-                    color: Colors.amber,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
+          ),
+
+          /// ✅ Glass card (center)
+          Positioned(
+            bottom: 70,
+            child: Container(
+              width: 200,
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(
+                  color: Colors.white.withOpacity(0.2),
                 ),
               ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _selectPlan(String plan) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Selected $plan plan'),
-        duration: const Duration(seconds: 1),
-      ),
-    );
-  }
-
-  void _startFreeTrial() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        title: const Text('Starting Your Free Trial'),
-        content: const Text('Please wait while we set up your account...'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Free trial started successfully! 🎉'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-            },
-            child: const Text('OK'),
+              child: Column(
+                children: const [
+                  Text(
+                    "Best Value",
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                    ),
+                  ),
+                  SizedBox(height: 6),
+                  Text(
+                    "\$59.99/year",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
     );
   }
+
 }
