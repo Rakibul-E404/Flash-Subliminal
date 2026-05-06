@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:subliminal/visual/home/home_screen.dart';
+import 'package:subliminal/visual/main_bottom_nav/main_bottom_nav_screen.dart';
 import 'package:subliminal/visual/settings/about_screen.dart';
 import 'package:subliminal/visual/settings/contact_screen.dart';
 import 'package:subliminal/visual/settings/dedication_screen.dart';
@@ -95,7 +97,8 @@ class SettingsScreen extends StatelessWidget {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Get.back(); // Navigate back to home screen
+                    // Get.back(); // Navigate back to home screen
+                    Get.to(()=>MainBottomNavScreen()); // Navigate back to home screen
                   },
                   borderRadius: BorderRadius.circular(30),
                   child: ClipRRect(
