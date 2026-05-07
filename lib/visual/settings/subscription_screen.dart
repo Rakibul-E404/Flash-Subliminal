@@ -65,7 +65,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 GestureDetector(
                   onTap: () => setState(() => isInfiniteSelected = false),
                   child: _buildPlanCard(
-                    title: 'Soulminal Mind Upgrade',
+                    title: 'Souliminal Mind Upgrade',
                     price: '\$9.99/month',
                     isSelected: !isInfiniteSelected,
                   ),
@@ -76,7 +76,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 GestureDetector(
                   onTap: () => setState(() => isInfiniteSelected = true),
                   child: _buildPlanCard(
-                    title: 'Soulminal Infinite',
+                    title: 'Souliminal Infinite',
                     price: '\$59.99/ year (Save 50%)',
                     subPrice: 'Only \$4.99/ month',
                     isSelected: isInfiniteSelected,

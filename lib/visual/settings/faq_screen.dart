@@ -64,7 +64,7 @@ class _FaqScreenState extends State<FaqScreen> {
 
                   // Important Note
                   Text(
-                    'Important: Soulminal is designed for adult use only (18+).\n'
+                    'Important: Souliminal is designed for adult use only (18+).\n'
                         'It is not recommended for children and may not be suitable for teenagers without supervision. '
                         'People with photosensitive epilepsy or other neurological conditions should consult a healthcare professional before use.',
                     style: TextStyle(
@@ -80,7 +80,7 @@ class _FaqScreenState extends State<FaqScreen> {
                   _buildSection(
                     title: '1. Safety, Suitability & Reassurance',
                     items: [
-                      'Is Soulminal flash safe?',
+                      'Is Souliminal flash safe?',
                       'Can Subliminal Flash override my free will?',
                       'Can Subliminal Flash cause negative effects?',
                       'Can I overdo Subliminal Flash?',
@@ -223,7 +223,7 @@ class _FaqScreenState extends State<FaqScreen> {
             ),
             child: const Text(
               'This is a dummy answer. The actual content will be fetched from the API during integration.\n\n'
-                  'Soulminal uses advanced micro-second image flashing technology to gently reprogram your subconscious mind while you go about your daily activities.',
+                  'Souliminal uses advanced micro-second image flashing technology to gently reprogram your subconscious mind while you go about your daily activities.',
               style: TextStyle(
                 fontSize: 15.5,
                 height: 1.6,

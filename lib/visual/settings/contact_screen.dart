@@ -40,7 +40,7 @@ class ContactScreen extends StatelessWidget {
                   const SizedBox(height: 40),
 
                   const Text(
-                    'Soulminal is here for you. Whether you have questions, need support, or want to share feedback, we’d love to hear from you. We’re committed to making your journey with us smooth, uplifting, and enjoyable.',
+                    'Souliminal is here for you. Whether you have questions, need support, or want to share feedback, we’d love to hear from you. We’re committed to making your journey with us smooth, uplifting, and enjoyable.',
                     style: TextStyle(
                       fontSize: 17,
                       height: 1.65,
@@ -63,7 +63,7 @@ class ContactScreen extends StatelessWidget {
                   const SizedBox(height: 12),
 
                   const Text(
-                    'officialsoulminal@gmail.com',
+                    'officialSouliminal@gmail.com',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.white,

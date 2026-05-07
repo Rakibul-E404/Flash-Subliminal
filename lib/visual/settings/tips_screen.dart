@@ -55,7 +55,7 @@ class TipsScreen extends StatelessWidget {
                   const SizedBox(height: 8),
 
                   const Text(
-                    'Tips for using Soulminal effectively',
+                    'Tips for using Souliminal effectively',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
@@ -67,7 +67,7 @@ class TipsScreen extends StatelessWidget {
                   _buildSection(
                     title: 'Relaxation:',
                     content:
-                    'Breathe deeply and relax to enter alpha or theta brain states, while using Soulminal, even as you do other tasks on your device. A calm brainwave system makes subliminal reprogramming more effective. Relaxation moves the brain into alpha and theta states, making the mind open, receptive and less guarded. Stress blocks the message—it is skin deep.',
+                    'Breathe deeply and relax to enter alpha or theta brain states, while using Souliminal, even as you do other tasks on your device. A calm brainwave system makes subliminal reprogramming more effective. Relaxation moves the brain into alpha and theta states, making the mind open, receptive and less guarded. Stress blocks the message—it is skin deep.',
                   ),
 
                   const SizedBox(height: 32),

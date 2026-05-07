@@ -65,18 +65,18 @@ class TermsConditionScreen extends StatelessWidget {
                   const SizedBox(height: 30),
 
                   const Text(
-                    'Welcome to Soulminal Flash. By downloading, accessing, or using this app, you agree to these Terms of Service. If you do not agree, do not use the app.\n\n'
+                    'Welcome to Souliminal Flash. By downloading, accessing, or using this app, you agree to these Terms of Service. If you do not agree, do not use the app.\n\n'
                         '1. Eligibility\n'
-                        'Soulminal is intended for adult use only (18+). Use by children under 18 is strictly prohibited. Teenagers (13-17) may only use the app under parental supervision and with guidance from a healthcare professional.\n\n'
+                        'Souliminal is intended for adult use only (18+). Use by children under 18 is strictly prohibited. Teenagers (13-17) may only use the app under parental supervision and with guidance from a healthcare professional.\n\n'
                         '2. Use of the App\n'
-                        'Soulminal provides subliminal image flashing and meditation features for personal development.\n\n'
+                        'Souliminal provides subliminal image flashing and meditation features for personal development.\n\n'
                         'Users may upload their own images for subliminal sessions. Uploaded content must be positive, safe, and comply with copyright laws.\n\n'
                         'Users are prohibited from uploading offensive, illegal, or harmful content.\n\n'
                         '3. Health and Safety\n'
                         'The app is not recommended for people with epilepsy or photosensitive conditions, as flashing images could trigger seizures. Use of the app does not replace medical or mental health advice. Consult a healthcare professional if you have concerns about app usage.\n\n'
                         'Always use the app in a safe, calm environment.\n\n'
                         '4. Intellectual Property\n'
-                        'Soulminal and its content are owned by [Your Company Name].',
+                        'Souliminal and its content are owned by [Your Company Name].',
                     style: TextStyle(
                       fontSize: 16.5,
                       height: 1.65,

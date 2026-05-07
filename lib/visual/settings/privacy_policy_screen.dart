@@ -63,9 +63,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   const SizedBox(height: 30),
 
                   const Text(
-                    'Soulminal (“we,” “our,” or “the app”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your personal information. By using the app, you agree to this policy.\n\n'
+                    'Souliminal (“we,” “our,” or “the app”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your personal information. By using the app, you agree to this policy.\n\n'
                         '1. Adult Use Only\n'
-                        'Soulminal is intended for adults (18+). The app is not designed for children, and anyone under 18 should not use the app.\n\n'
+                        'Souliminal is intended for adults (18+). The app is not designed for children, and anyone under 18 should not use the app.\n\n'
                         '2. Information We Collect\n'
                         'We collect the following types of information:\n'
                         '• User-provided information: images you upload for subliminal sessions.\n'

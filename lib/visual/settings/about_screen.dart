@@ -38,7 +38,8 @@ class AboutScreen extends StatelessWidget {
                         ),
 
                         const Text(
-                          'About Soulminal',
+                          // 'About Souliminal',
+                          'About Souliminal',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 32,
@@ -57,7 +58,7 @@ class AboutScreen extends StatelessWidget {
 
                   // Main Description
                   _buildParagraph(
-                    "Soulminal is a subconscious reprogramming tool for those who want quiet, gentle, continuous transformation while going about their day.",
+                    "Souliminal is a subconscious reprogramming tool for those who want quiet, gentle, continuous transformation while going about their day.",
                   ),
 
                   const SizedBox(height: 24),
@@ -101,7 +102,7 @@ class AboutScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   _buildParagraph(
-                    "Soulminal keeps these images active in your subconscious, helping you:",
+                    "Souliminal keeps these images active in your subconscious, helping you:",
                   ),
 
                   const SizedBox(height: 16),
@@ -128,7 +129,7 @@ class AboutScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   _buildParagraph(
-                    "When you want to pause and reconnect, Soulminal offers a calming Meditation Mode.\n\n"
+                    "When you want to pause and reconnect, Souliminal offers a calming Meditation Mode.\n\n"
                         "• Flowing aurora visuals\n"
                         "• gentle subliminal flashes\n"
                         "• and frequency soundscapes\nguide your mind into alpha and theta states — enhancing subconscious receptivity.",
