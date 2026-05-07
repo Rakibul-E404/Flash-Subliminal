@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:subliminal/core/app_text_style.dart';
 import 'dart:io';
 import 'dart:ui' as ui;
+import '../../core/utils/app_colors.dart';
 import '../../widget/custom_background_two.dart';
 import '../board_details/board_details_screen.dart';
 
@@ -37,33 +38,20 @@ class _HomeScreenState extends State<HomeScreen> {
       'imageFile': null,
     },
     {
-      'name': 'Believe in Yourself',
+      'name': 'Board Three',
       'type': 'image',
       'assetPath': 'assets/images/image3.png',
       'isLocal': true,
       'imageFile': null,
     },
     {
-      'name': 'Board Three',
+      'name': 'Board Four',
       'type': 'image',
       'assetPath': 'assets/images/image4.png',
       'isLocal': true,
       'imageFile': null,
     },
-    {
-      'name': 'Board Four',
-      'type': 'image',
-      'assetPath': 'assets/images/image1.png',
-      'isLocal': true,
-      'imageFile': null,
-    },
-    {
-      'name': 'Board Five',
-      'type': 'image',
-      'assetPath': 'assets/images/image2.png',
-      'isLocal': true,
-      'imageFile': null,
-    },
+
   ];
 
   // Text controllers for rename mode
@@ -688,7 +676,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // Normal board item
   Widget _buildNormalBoardItem(Map<String, dynamic> board, int index) {
     return GestureDetector(
       onTap: () {
@@ -699,261 +686,260 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       },
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Image Container
-              Expanded(
-                child: _buildImageContent(board),
+      child: Column(
+        children: [
+          // Image Container - fills the box with rounded corners
+          Container(
+            width: double.infinity,
+            height: 140, // Fixed height for the image box
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.08),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: _buildImageContent(board),
+            ),
+          ),
+          const SizedBox(height: 8),
+          // Board Name - outside the box
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Text(
+              board['name'],
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF4A4A4A),
               ),
-              const SizedBox(height: 8),
-              // Board Name
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Text(
-                  board['name'],
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+// Rename board item
+  Widget _buildRenameBoardItem(Map<String, dynamic> board, int index) {
+    return Column(
+      children: [
+        // Image Container - fills the box with rounded corners
+        Container(
+          width: double.infinity,
+          height: 140, // Fixed height for the image box
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.08),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: _buildImageContent(board),
+          ),
+        ),
+        const SizedBox(height: 8),
+        // Board Name with edit - outside the box
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _nameControllers[index],
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: Color(0xFF4A4A4A),
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(height: 4),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Rename board item
-  Widget _buildRenameBoardItem(Map<String, dynamic> board, int index) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: _buildImageContent(board),
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _nameControllers[index],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF4A4A4A),
-                      ),
-                      decoration: const InputDecoration(
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: 4,
-                          horizontal: 4,
-                        ),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFE0D5CF)),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFE0D5CF)),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xFF9DB4C0),
-                            width: 2,
-                          ),
-                        ),
+                  decoration: const InputDecoration(
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 4,
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFE0D5CF)),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFE0D5CF)),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0xFF9DB4C0),
+                        width: 2,
                       ),
                     ),
                   ),
-                  const Icon(Icons.edit, size: 18, color: Color(0xFF9DB4C0)),
-                ],
+                ),
               ),
-            ),
-            const SizedBox(height: 4),
-          ],
+              const Icon(Icons.edit, size: 18, color: Color(0xFF9DB4C0)),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 
-  // Change cover board item
+// Change cover board item
   Widget _buildChangeCoverBoardItem(Map<String, dynamic> board, int index) {
     return GestureDetector(
       onTap: () {
         _pickImageFromGallery(index);
       },
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
+      child: Column(
+        children: [
+          // Image Container - fills the box with rounded corners
+          Container(
+            width: double.infinity,
+            height: 140, // Fixed height for the image box
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.08),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    _buildImageContent(board),
-                    Container(color: Colors.black.withOpacity(0.4)),
-                    const Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.camera_alt, size: 40, color: Colors.white),
-                          SizedBox(height: 8),
-                          Text(
-                            'Change Cover',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Text(
-                  board['name'],
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF4A4A4A),
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(height: 4),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Delete board item
-  Widget _buildDeleteBoardItem(Map<String, dynamic> board, int index) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
               child: Stack(
+                fit: StackFit.expand,
                 children: [
                   _buildImageContent(board),
-                  // Close button at top right
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: GestureDetector(
-                      onTap: () {
-                        _deleteBoard(index);
-                      },
-                      child: Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.95),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+                  Container(color: Colors.black.withOpacity(0.4)),
+                  const Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.camera_alt, size: 40, color: Colors.white),
+                        SizedBox(height: 8),
+                        Text(
+                          'Change Cover',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                        child: const Icon(
-                          Icons.close,
-                          size: 18,
-                          color: Color(0xFFE57373),
-                        ),
-                      ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                board['name'],
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF4A4A4A),
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 8),
+          // Board Name - outside the box
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Text(
+              board['name'],
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF4A4A4A),
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 4),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+
+// Delete board item
+  Widget _buildDeleteBoardItem(Map<String, dynamic> board, int index) {
+    return Column(
+      children: [
+        // Image Container - fills the box with rounded corners
+        Container(
+          width: double.infinity,
+          height: 140, // Fixed height for the image box
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.08),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Stack(
+              children: [
+                _buildImageContent(board),
+                // Close button at top right
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: GestureDetector(
+                    onTap: () {
+                      _deleteBoard(index);
+                    },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.95),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child:  Icon(
+                        Icons.close,
+                        size: 18,
+                        color: AppColors.deleteIconColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        // Board Name - outside the box
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Text(
+            board['name'],
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF4A4A4A),
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    );
+  }
+
+
 
   Widget _buildImageContent(Map<String, dynamic> board) {
     if (board['type'] == 'image') {
