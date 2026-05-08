@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:subliminal/visual/settings/reminders_screen.dart';
 import 'package:subliminal/visual/settings/settings_screen.dart';
 import 'package:subliminal/visual/splash/splash_screen.dart';
 import 'visual/main_bottom_nav/main_bottom_nav_screen.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
-      // home: const SettingsScreen(),
+      // home: const RemindersScreen(),
     );
   }
 }

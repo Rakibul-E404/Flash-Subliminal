@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:subliminal/core/utils/app_colors.dart';
 import '../../widget/custom_background.dart';
 import '../../widget/custom_gradientBorder_button.dart';
 
@@ -273,7 +274,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
 }
 
 // ======================================================
-// CUSTOM TIME PICKER DIALOG - Matches image exactly
+// CUSTOM TIME PICKER DIALOG - Matches figma exactly
 // ======================================================
 
 class _CustomTimePickerDialog extends StatefulWidget {
@@ -562,8 +563,10 @@ class _CustomTimePickerDialogState extends State<_CustomTimePickerDialog> {
   }
 }
 
+
+
 // ======================================================
-// CUSTOM REPEAT PICKER
+// CUSTOM REPEAT PICKER - Matches figma exactly
 // ======================================================
 
 class _CustomRepeatPicker extends StatefulWidget {
@@ -581,116 +584,176 @@ class _CustomRepeatPicker extends StatefulWidget {
 
 class _CustomRepeatPickerState extends State<_CustomRepeatPicker> {
   late String selectedRepeat;
+  late Set<String> selectedDays;
 
-  final List<String> repeatOptions = [
+  final List<String> allOptions = [
     'Daily',
-    'Weekdays',
-    'Weekends',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
   ];
 
   @override
   void initState() {
     super.initState();
     selectedRepeat = widget.currentRepeat;
+    selectedDays = {selectedRepeat};
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
-      decoration: const BoxDecoration(
-        color: Color(0xFF1A1A2E),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      width: 340,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF5F1ED),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          // Handle bar
-          Container(
-            margin: const EdgeInsets.only(top: 12),
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: Colors.white24,
-              borderRadius: BorderRadius.circular(2),
+          // Title
+          const Text(
+            'Repeat',
+            style: TextStyle(
+              color: Color(0xFF2C3E50),
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 20),
 
-          // Header
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(color: Colors.white70, fontSize: 18),
+          const SizedBox(height: 24),
+
+          // Options in 2 columns
+          Column(
+            children: [
+              // Row 1: Daily, Wed
+              _buildOptionRow(['Daily', 'Wed']),
+              const SizedBox(height: 12),
+              // Row 2: Sun, Thu
+              _buildOptionRow(['Sun', 'Thu']),
+              const SizedBox(height: 12),
+              // Row 3: Mon, Fri
+              _buildOptionRow(['Mon', 'Fri']),
+              const SizedBox(height: 12),
+              // Row 4: Tue, Sat
+              _buildOptionRow(['Tue', 'Sat']),
+            ],
+          ),
+
+          const SizedBox(height: 28),
+
+          // Cancel and Save buttons
+          Row(
+            children: [
+              // Cancel button
+              Expanded(
+                child: Container(
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
+                      color: AppColors.popupCardColor,
+                      width: 1.5,
+                    ),
+                  ),
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: Color(0xFF2C3E50),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ),
-                const Text(
-                  'Repeat',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
+              ),
+
+              const SizedBox(width: 12),
+
+              // Save button using GradientBorderButton
+              Expanded(
+                child: GradientBorderButton(
+                  text: 'Save',
+                  height: 56,
+                  onTap: () {
                     widget.onRepeatSelected(selectedRepeat);
                     Navigator.pop(context);
                   },
-                  child: const Text(
-                    'Save',
-                    style: TextStyle(
-                      color: Color(0xFF4CAF50),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+        ],
+      ),
+    );
+  }
 
-          const SizedBox(height: 16),
+  Widget _buildOptionRow(List<String> options) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: options.map((option) {
+        return Expanded(
+          child: _buildRadioOption(option),
+        );
+      }).toList(),
+    );
+  }
 
-          // Options list
-          Expanded(
-            child: ListView.builder(
-              itemCount: repeatOptions.length,
-              itemBuilder: (context, index) {
-                final option = repeatOptions[index];
-                final isSelected = selectedRepeat == option;
+  Widget _buildRadioOption(String option) {
+    final isSelected = selectedRepeat == option;
 
-                return ListTile(
-                  title: Text(
-                    option,
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: isSelected ? const Color(0xFF4CAF50) : Colors.white,
-                      fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
-                    ),
-                  ),
-                  trailing: isSelected
-                      ? const Icon(Icons.check, color: Color(0xFF4CAF50))
-                      : null,
-                  onTap: () {
-                    setState(() {
-                      selectedRepeat = option;
-                    });
-                  },
-                );
-              },
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedRepeat = option;
+        });
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Custom Radio Button
+          Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: AppColors.selectRingCircle,
+                width: 1.5,
+              ),
+              color: isSelected ? AppColors.colorWhite : Colors.transparent,
+            ),
+            child: isSelected
+                ?  Center(
+              child: Icon(
+                Icons.circle,
+                size: 14,
+                color: AppColors.selectColor,
+              ),
+            )
+                : null,
+          ),
+          const SizedBox(width: 12),
+          // Option text
+          Text(
+            option,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: AppColors.colorBlack,
             ),
           ),
         ],
